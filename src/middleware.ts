@@ -1,37 +1,30 @@
 import { NextResponse } from "next/server";
-import { verifyJwtToken } from "@/libs/auth";
+import type { NextRequest } from "next/server";
 
-const AUTH_PAGES = ["/login"];
+export function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname;
 
-const isAuthPages = (url: any) =>
-  AUTH_PAGES.some((page) => page.startsWith(url));
+  // Define paths that are considered public (accessible without a token)
+  const isPublicPath =
+    path === "/login" || path === "/signup" || path === "/verifyemail";
 
-export async function middleware(request: any) {
-  const { url, nextUrl, cookies } = request;
-  const { value: token } = cookies.get("token") ?? { value: null };
-  const hasVerifiedToken = token && (await verifyJwtToken(token));
-  const isAuthPageRequested = isAuthPages(nextUrl.pathname);
+  // Get the token from the cookies
+  const token = request.cookies.get("token")?.value || "";
 
-  if (isAuthPageRequested) {
-    if (!hasVerifiedToken) {
-      const response = NextResponse.next();
-      response.cookies.delete("token");
-      return response;
-    }
-    const response = NextResponse.redirect(new URL(`/`, url));
-    return response;
+  // Redirect logic based on the path and token presence
+  if (isPublicPath && token) {
+    // If trying to access a public path with a token, redirect to the home page
+    return NextResponse.redirect(new URL("/", request.nextUrl));
   }
 
-  if (!hasVerifiedToken) {
-    const searchParams = new URLSearchParams(nextUrl.searchParams);
-    searchParams.set("next", nextUrl.pathname);
-    const response = NextResponse.redirect(
-      new URL(`/login?${searchParams}`, url)
-    );
-    response.cookies.delete("token");
-    return response;
+  // If trying to access a protected path without a token, redirect to the login page
+  if (!isPublicPath && !token) {
+    return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
-
-  return NextResponse.next();
 }
-export const config = { matcher: ["/login", "/protected/:path*"] };
+
+// It specifies the paths for which this middleware should be executed.
+// In this case, it's applied to '/', '/profile', '/login', and '/signup'.
+export const config = {
+  matcher: ["/", "/profile", "/login", "/signup", "/verifyemail"],
+};

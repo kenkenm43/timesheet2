@@ -1,11 +1,10 @@
+import Navbar from "@/components/navbar/Navbar";
 import React from "react";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <nav className="bg-red-500 text-white">
-        This is navbar without /auth prefix
-      </nav>
+      <Navbar />
       {children}
     </div>
   );

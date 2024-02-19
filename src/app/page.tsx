@@ -1,7 +1,24 @@
-import React from "react";
+"use client";
 
-const Page = () => {
-  return <div>Page</div>;
-};
+import { useAuth } from "@/hooks/useAuth";
+import Link from "next/link";
+export default function Home() {
+  const auth = useAuth();
 
-export default Page;
+  return (
+    <>
+      <h1>Public Home Page</h1>
+      <header>
+        <nav>
+          {auth ? (
+            <p>
+              logged in <Link href="/profile">Profile</Link>
+            </p>
+          ) : (
+            <Link href="/login">Login</Link>
+          )}
+        </nav>
+      </header>
+    </>
+  );
+}

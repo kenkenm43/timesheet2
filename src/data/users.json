@@ -1,0 +1,38 @@
+[
+  {
+    "id": "a0d826498b239b4fa6283569c2a60161",
+    "username": "kenkenm43dd",
+    "password": "$2a$10$2PWme4oOTzeouB9.8uW1buh2/1Tdja1wd8xKVkrHITjjgyXB2ztzm",
+    "firstName": "Nattawat",
+    "lastName": "Wangsupadilok",
+    "idCard": "15201011640702",
+    "roles": ["user"]
+  },
+  {
+    "id": "59bea6ce6d7fa450f4e0cc5f5780eb04",
+    "username": "kenkenm43dda",
+    "password": "$2a$10$izIAdFnWsO0NmljUr6nkuOHXzdyTrw0nIhg9R2QDqIOKZRSUh7rSy",
+    "firstName": "Nattawat",
+    "lastName": "Wangsupadilok",
+    "idCard": "1520101164070",
+    "roles": ["user"]
+  },
+  {
+    "id": "b5d42bd22d5d3c37534a5fec3ec97f4a",
+    "username": "kenkenm43ddawda",
+    "password": "$2a$10$OtnXfFlcUQpyTk38rSMuWOA536z3cXvR6QA1bDo8QW.IXKuYE2qBe",
+    "firstName": "Nattawat",
+    "lastName": "Wangsupadilok",
+    "idCard": "15201011640720",
+    "roles": ["user"]
+  },
+  {
+    "id": "ff31407503beb61f47be7be980dd7b74",
+    "username": "kenkenm43",
+    "password": "$2a$10$l.Rmwhnt4em8.uRgQpMHSucVDRRjzPK8RsQvhg/SooL81RQbm3gQG",
+    "firstName": "Nattawat",
+    "lastName": "Wangsupadilok",
+    "idCard": "152010116407",
+    "roles": ["admin"]
+  }
+]

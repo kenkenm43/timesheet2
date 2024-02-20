@@ -1,30 +1,34 @@
-import { connect } from "@/dbConfig/dbConfig";
-import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-connect();
+import { userMock } from "@/dbConfig/jsonConfig";
+import { UserProps } from "@/types";
 
 export async function POST(request: NextRequest) {
   try {
+    const users = await userMock();
     const reqBody = await request.json();
-    const { email, password } = reqBody;
-
+    const { username, password } = reqBody;
     //check if user exists
-    const user = await User.findOne({ email });
+    const user = await users.find(
+      (user: UserProps) => user.username === username
+    );
+    // const user = await User.findOne({ email });
 
     if (!user) {
       return NextResponse.json(
-        { error: "User does not exist" },
+        { error: "ไม่มีชื่อผู้ใช้นี้ในระบบ" },
         { status: 400 }
       );
     }
 
+    if (!password) {
+      return NextResponse.json({ message: "ใส่รหัสผ่านด้วย" }, { status: 400 });
+    }
     //check if password is correct
     const validPassword = await bcryptjs.compare(password, user.password);
     if (!validPassword) {
-      return NextResponse.json({ error: "Invlid password" }, { status: 400 });
+      return NextResponse.json({ error: "กรอกรหัสผ่านผิด" }, { status: 400 });
     }
 
     //create token data
@@ -33,15 +37,18 @@ export async function POST(request: NextRequest) {
     // username, and email.
 
     const tokenData = {
-      id: user._id,
+      id: user.id,
       username: user.username,
-      email: user.email,
     };
 
     // Create a token with expiration of 1 day
-    const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
-      expiresIn: "1d",
-    });
+    const token = await jwt.sign(
+      tokenData,
+      process.env.NEXT_PUBLIC_TOKEN_SECRET!,
+      {
+        expiresIn: "1d",
+      }
+    );
 
     // Create a JSON response indicating successful login
     const response = NextResponse.json({

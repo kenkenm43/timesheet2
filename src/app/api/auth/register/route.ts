@@ -28,13 +28,13 @@ export async function POST(request: NextRequest) {
     //If yes, returns a 400 response.
     if (user) {
       return NextResponse.json(
-        { error: "ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว" },
+        { message: "ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว" },
         { status: 400 }
       );
     }
     if (haveIdCard)
       return NextResponse.json(
-        { error: "รหัสบัตรประชาชนนี้ถูกลงทะเบียนแล้ว" },
+        { message: "รหัสบัตรประชาชนนี้ถูกลงทะเบียนแล้ว" },
         { status: 400 }
       );
 

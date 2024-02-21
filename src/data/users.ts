@@ -1,6 +1,6 @@
 import { UserProps } from "@/types";
 
-export const users: Array<UserProps> = [
+export const users: UserProps[] = [
   {
     id: 1,
     username: "kenkenm43",

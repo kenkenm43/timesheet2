@@ -1,54 +1,84 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { UserProps } from "@/types";
 
 const Register = () => {
   const router = useRouter();
-  const [user, setUser] = React.useState({
-    email: "",
-    password: "",
+  const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<UserProps>({
     username: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    idCard: "",
   });
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const onSignup = async () => {
     try {
-      const response = await axios.post("/api/users/signup", user);
-      router.push("/login");
+      setLoading(true);
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/register",
+        user
+      );
+      router.replace("/login");
     } catch (error: any) {
-      console.log("Signup failed", error.message);
+      const { message } = error.response.data;
+      console.log(message);
+      setErrorMessage(message);
+      console.log("Signup failed", error.response.data);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <label htmlFor="username">username</label>
+    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <label htmlFor="username">ชื่อผู้ใช้งาน</label>
       <input
         id="username"
         type="text"
         value={user.username}
         onChange={(e) => setUser({ ...user, username: e.target.value })}
-        placeholder="username"
+        placeholder="ชื่อผู้ใช้งาน"
       />
-      <label htmlFor="email">email</label>
+      <label htmlFor="idCard">เลขบัตรประชาชน</label>
       <input
-        id="email"
+        id="idCard"
         type="text"
-        value={user.email}
-        onChange={(e) => setUser({ ...user, email: e.target.value })}
-        placeholder="email"
-      />
-      <label htmlFor="password">password</label>
+        value={user.idCard}
+        onChange={(e) => setUser({ ...user, idCard: e.target.value })}
+        placeholder="เลขบัตรประชาชน"
+      />{" "}
+      <label htmlFor="firstName">ชื่อจริง</label>
+      <input
+        id="firstName"
+        type="text"
+        value={user.firstName}
+        onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+        placeholder="ชื่อจริง"
+      />{" "}
+      <label htmlFor="lastName">นามสกุล</label>
+      <input
+        id="lastName"
+        type="text"
+        value={user.lastName}
+        onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+        placeholder="นามสกุล"
+      />{" "}
+      <label htmlFor="password">รหัสผ่าน</label>
       <input
         id="password"
         type="password"
         value={user.password}
         onChange={(e) => setUser({ ...user, password: e.target.value })}
-        placeholder="password"
+        placeholder="รหัสผ่าน"
       />
-      <button onClick={onSignup}>Sign Up</button>
-
-      <Link href="/login">Visit login page</Link>
+      <button onClick={onSignup}>ลงทะเบียน</button>
+      {errorMessage}
+      <Link href="/login">ไปหน้าเข้าสู่ระบบ</Link>
     </div>
   );
 };

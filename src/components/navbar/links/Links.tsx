@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import NavLink from "./navLink/navLink";
-import { useAuth } from "@/hooks/useAuth";
+// import { useAuth } from "@/hooks/useAuth";
+import axios from "axios";
+import { useRouter } from "next/router";
 const links = [
   { title: "Homepage", path: "/" },
   { title: "Summary", path: "/summary" },
@@ -10,10 +12,10 @@ const links = [
 
 const Links = () => {
   const [open, setOpen] = useState(false);
-  const auth: any = useAuth();
-
+  // const auth: any = useAuth();
+  const router = useRouter();
   const session = true;
-  const isAdmin = auth?.roles?.includes("admin");
+  // const isAdmin = auth?.roles?.includes("admin");
 
   return (
     <div>
@@ -23,8 +25,7 @@ const Links = () => {
         ))}
         {session ? (
           <>
-            {isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />}
-            <button>Logout</button>
+            {/* {isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />} */}
           </>
         ) : (
           <NavLink item={{ title: "Login", path: "/login" }} />

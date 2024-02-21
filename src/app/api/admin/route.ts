@@ -9,7 +9,7 @@ export async function GET(request: any) {
   //   user?.roles.includes("user")
   // );
   const simpleUsers: UserProps[] = users.filter((user: UserProps) =>
-    user.roles?.includes("user")
+    user.roles?.includes("admin")
   );
 
   const response = NextResponse.json(

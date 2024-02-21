@@ -34,5 +34,14 @@
     "lastName": "Wangsupadilok",
     "idCard": "152010116407",
     "roles": ["admin"]
+  },
+  {
+    "id": "03c8f82ea16af9d2b51ff6427feba740",
+    "username": "kenkenm43111",
+    "password": "$2a$10$yKfyVV72GmC7vD43coL06ufi3f/iPKtY5QBSJHl2.LRcEp1qALFlG",
+    "firstName": "ณัฐฐวัฒน์",
+    "lastName": "หวังศุภดิลก",
+    "idCard": "15201011640",
+    "roles": ["user"]
   }
 ]

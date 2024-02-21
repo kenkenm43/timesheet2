@@ -1,22 +1,23 @@
-// src/app/profile/page.ts
 "use client";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { getDataFromToken } from "@/helper/getDataFromToken";
+import { useAuth } from "@/hooks/useAuth";
+import { getSession } from "@/libs/authen";
 
 export default function ProfilePage() {
-  const router = useRouter();
-  const [data, setData] = useState<any>("nothing");
+  // const session = getSession();
+  // console.log(session);
 
-  const getUserDetails = async () => {
-    const res = await axios.get("/api/users/me");
-    setData(res.data.data._id);
-  };
+  // const router = useRouter();
+  // const [data, setData] = useState<any>("nothing");
+
+  // const getUserDetails = async () => {
+  //   const res = await axios.get("/api/users/me");
+  //   setData(res.data.data._id);
+  // };
+
   return (
     <div>
       <h1>Profile</h1>
-      <h2>{data === "nothing" ? "Nothing" : { data }}</h2>
-      <button onClick={getUserDetails}>Details</button>
     </div>
   );
 }
